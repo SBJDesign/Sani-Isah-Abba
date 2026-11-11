@@ -47,14 +47,14 @@ export default function SiteLayout() {
         <div className="page flex h-16 items-center justify-between gap-6">
           <Link to="/" className="flex items-center gap-3 font-medium tracking-tight">
             <Mark />
-            <span>{profile.honorific} {profile.name}</span>
+            <span className="whitespace-nowrap">{profile.honorific} {profile.name}</span>
           </Link>
           <nav aria-label="Main" className="hidden md:block">
-            <ul className="flex items-center gap-1 text-[0.95rem]">
+            <ul className="flex items-center gap-0.5 text-[0.95rem] lg:gap-1">
               {nav.map((n) => (
                 <li key={n.to}>
                   <NavLink to={n.to}
-                    className={({ isActive }) => `rounded-full px-4 py-2 transition-colors ${isActive ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white'}`}>
+                    className={({ isActive }) => `whitespace-nowrap rounded-full px-3 py-2 transition-colors lg:px-4 ${isActive ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white'}`}>
                     {n.label}
                   </NavLink>
                 </li>

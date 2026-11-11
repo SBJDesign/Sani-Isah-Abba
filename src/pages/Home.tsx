@@ -54,9 +54,26 @@ export default function Home() {
         <Contours />
         <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-observed/25 blur-3xl" />
         <div className="page relative pb-32 pt-16 sm:pt-24">
-          <div className="grid gap-10 lg:grid-cols-[1fr_17rem] lg:items-center">
-            <div className="order-2 lg:order-1">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-white/80">
+          <div className="grid gap-12 lg:grid-cols-[1fr_17rem] lg:items-center">
+            <div>
+              {/* Phones and tablets: portrait beside role and location */}
+              <div className="flex items-center gap-4 lg:hidden">
+                <div className="relative shrink-0 rounded-full bg-gradient-to-br from-predicted to-observed p-[3px]">
+                  {profile.photo_url ? (
+                    <div className="h-20 w-20 overflow-hidden rounded-full border-2 border-ink sm:h-24 sm:w-24">
+                      <img src={profile.photo_url} alt={`Portrait of ${profile.name}`} className="h-full w-full origin-[50%_22%] scale-[1.7] object-cover object-[50%_20%]" />
+                    </div>
+                  ) : (
+                    <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-ink bg-ink-soft text-2xl font-medium sm:h-24 sm:w-24">{initials}</div>
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[0.95rem] font-medium leading-snug text-white">{profile.title}</p>
+                  <p className="mt-1 text-sm leading-snug text-white/60">{profile.location}</p>
+                </div>
+              </div>
+              {/* Large screens: role pill (photo sits in the right column) */}
+              <p className="hidden items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-white/80 lg:inline-flex">
                 <span className="h-1.5 w-1.5 rounded-full bg-predicted" aria-hidden /> {profile.title}
               </p>
               <h1 className="mt-6 text-5xl font-medium leading-[1.02] tracking-[-0.03em] sm:text-7xl">
@@ -72,8 +89,8 @@ export default function Home() {
                 )}
               </div>
             </div>
-            <div className="order-1 lg:order-2">
-              <div className="relative w-40 sm:w-48 lg:mx-auto lg:w-64">
+            <div className="hidden lg:block">
+              <div className="relative mx-auto w-64">
                 <div aria-hidden className="absolute -inset-3 rounded-[2rem] border border-white/15" />
                 {profile.photo_url ? (
                   <img src={profile.photo_url} alt={`Portrait of ${profile.name}`} className="relative aspect-[4/5] w-full rounded-3xl object-cover" />
@@ -82,7 +99,7 @@ export default function Home() {
                     {initials}
                   </div>
                 )}
-                <p className="relative mt-5 hidden text-center text-sm text-white/60 lg:block">{profile.location}</p>
+                <p className="relative mt-5 text-center text-sm text-white/60">{profile.location}</p>
               </div>
             </div>
           </div>
