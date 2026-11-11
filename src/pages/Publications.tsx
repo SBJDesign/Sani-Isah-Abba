@@ -6,7 +6,7 @@ import { useCollection } from '../lib/store'
 import { PUB_TYPE_LABEL, type PubType } from '../lib/types'
 
 export default function Publications() {
-  const { items, loading } = useCollection('publications')
+  const { items, loading } = useCollection('publications', { fallback: true })
   const [q, setQ] = useState('')
   const [type, setType] = useState<PubType | 'all'>('all')
   const [year, setYear] = useState<string>('all')

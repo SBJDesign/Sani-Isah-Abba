@@ -6,7 +6,7 @@ import { POST_CATEGORY_LABEL } from '../lib/types'
 import { categoryIcon } from '../components/icons'
 
 export default function News() {
-  const { items, loading } = useCollection('posts')
+  const { items, loading } = useCollection('posts', { fallback: true })
   const posts = items.filter((p) => p.published).sort((a, b) => b.date.localeCompare(a.date))
   return (
     <>
@@ -38,7 +38,7 @@ export default function News() {
 
 export function NewsPost() {
   const { id } = useParams()
-  const { items, loading } = useCollection('posts')
+  const { items, loading } = useCollection('posts', { fallback: true })
   const n = items.find((p) => p.id === id && p.published)
   if (loading) return <div className="page py-20 text-sediment">Loading…</div>
   if (!n)

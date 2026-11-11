@@ -26,7 +26,7 @@ function ProjectRow({ p }: { p: Project }) {
 }
 
 export default function Research() {
-  const { items, loading } = useCollection('projects')
+  const { items, loading } = useCollection('projects', { fallback: true })
   const sorted = [...items].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
   const ongoing = sorted.filter((p) => p.status === 'ongoing')
   const done = sorted.filter((p) => p.status === 'completed')

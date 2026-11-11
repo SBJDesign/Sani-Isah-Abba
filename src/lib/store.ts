@@ -203,20 +203,26 @@ export function useSession() {
 
 /* ---------------- hooks ---------------- */
 
-export function useCollection<K extends Collection>(c: K) {
+/**
+ * fallback: on public pages, show the starter content while a database table is still empty,
+ * so the site never looks blank. The admin dashboard always shows the real database contents.
+ */
+export function useCollection<K extends Collection>(c: K, opts: { fallback?: boolean } = {}) {
   const [items, setItems] = useState<CollectionMap[K][]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const load = useCallback(async () => {
     try {
-      setItems(await list(c))
+      const rows = await list(c)
+      setItems(opts.fallback && rows.length === 0 ? seeds[c] : rows)
       setError(null)
     } catch (e) {
+      if (opts.fallback) setItems(seeds[c])
       setError((e as Error).message)
     } finally {
       setLoading(false)
     }
-  }, [c])
+  }, [c, opts.fallback])
   useEffect(() => {
     load()
     listeners.add(load)

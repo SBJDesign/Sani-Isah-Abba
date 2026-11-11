@@ -5,7 +5,7 @@ import { PageHeader } from '../components/SiteLayout'
 import { useCollection } from '../lib/store'
 
 export default function Gallery() {
-  const { items, loading } = useCollection('gallery')
+  const { items, loading } = useCollection('gallery', { fallback: true })
   const photos = [...items].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
   const [open, setOpen] = useState<number | null>(null)
 

@@ -29,10 +29,10 @@ function SectionHead({ title, intro, to, linkLabel }: { title: string; intro?: s
 
 export default function Home() {
   const { profile } = useProfile()
-  const pubs = useCollection('publications')
-  const posts = useCollection('posts')
-  const projects = useCollection('projects')
-  const gallery = useCollection('gallery')
+  const pubs = useCollection('publications', { fallback: true })
+  const posts = useCollection('posts', { fallback: true })
+  const projects = useCollection('projects', { fallback: true })
+  const gallery = useCollection('gallery', { fallback: true })
   const [lb, setLb] = useState<number | null>(null)
   const sortedPhotos = [...gallery.items].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
   const shots = (sortedPhotos.filter((p) => p.featured).length ? sortedPhotos.filter((p) => p.featured) : sortedPhotos).slice(0, 4)
@@ -54,8 +54,8 @@ export default function Home() {
         <Contours />
         <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-observed/25 blur-3xl" />
         <div className="page relative pb-32 pt-16 sm:pt-24">
-          <div className="grid gap-12 lg:grid-cols-[1fr_17rem] lg:items-center">
-            <div>
+          <div className="grid gap-10 lg:grid-cols-[1fr_17rem] lg:items-center">
+            <div className="order-2 lg:order-1">
               <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-sm text-white/80">
                 <span className="h-1.5 w-1.5 rounded-full bg-predicted" aria-hidden /> {profile.title}
               </p>
@@ -72,8 +72,8 @@ export default function Home() {
                 )}
               </div>
             </div>
-            <div className="hidden lg:block">
-              <div className="relative mx-auto w-64">
+            <div className="order-1 lg:order-2">
+              <div className="relative w-40 sm:w-48 lg:mx-auto lg:w-64">
                 <div aria-hidden className="absolute -inset-3 rounded-[2rem] border border-white/15" />
                 {profile.photo_url ? (
                   <img src={profile.photo_url} alt={`Portrait of ${profile.name}`} className="relative aspect-[4/5] w-full rounded-3xl object-cover" />
@@ -82,7 +82,7 @@ export default function Home() {
                     {initials}
                   </div>
                 )}
-                <p className="relative mt-5 text-center text-sm text-white/60">{profile.location}</p>
+                <p className="relative mt-5 hidden text-center text-sm text-white/60 lg:block">{profile.location}</p>
               </div>
             </div>
           </div>
