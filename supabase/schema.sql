@@ -92,6 +92,14 @@ create policy "admin write posts"        on public.posts        for all to authe
 create policy "admin write gallery"      on public.gallery      for all to authenticated using (true) with check (true);
 create policy "admin manage messages"    on public.messages     for all to authenticated using (true) with check (true);
 
+-- Table permissions for the website's API roles --------------------------
+-- (Needed if "Automatically expose new tables" is off; harmless otherwise.
+--  Row-level security above still decides what each role can actually do.)
+grant usage on schema public to anon, authenticated;
+grant select on public.profile, public.publications, public.projects, public.posts, public.gallery to anon, authenticated;
+grant insert on public.messages to anon;
+grant select, insert, update, delete on public.profile, public.publications, public.projects, public.posts, public.gallery, public.messages to authenticated;
+
 -- File storage (PDFs, photos, CV) ------------------------------------------
 insert into storage.buckets (id, name, public) values ('files', 'files', true)
   on conflict (id) do nothing;
